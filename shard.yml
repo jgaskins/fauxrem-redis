@@ -1,0 +1,25 @@
+name: forem_redis
+version: 0.1.0
+
+authors:
+  - Jamie Gaskins <jgaskins@hey.com>
+
+targets:
+  fauxrem_redis:
+    main: src/fauxrem_redis.cr
+  add_role:
+    main: src/add_role.cr
+
+dependencies:
+  armature: { github: jgaskins/armature }
+  redis: { github: jgaskins/redis }
+  markd: { github: icyleaf/markd }
+
+development_dependencies:
+  faker: { github: askn/faker }
+  pg: { github: will/crystal-pg }
+  interro: { github: jgaskins/interro }
+
+crystal: 1.5.0
+
+license: MIT

@@ -1,0 +1,79 @@
+<style>
+.badge {
+  display: inline-block;
+  padding: 2px 4px;
+  border: 1px solid;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.subdued {
+  border-color: black;
+  background: #888;
+  color: black;
+}
+
+#posts-list {
+  list-style: none;
+  padding: 0;
+}
+
+#posts-list .posts-entry {
+  margin: 1em;
+}
+
+.post-tag-list {
+  list-style: none;
+  padding: 0;
+}
+
+.post-tag {
+  display: inline-block;
+  margin: 0.25em 0.5em;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-around;
+}
+
+.pagination a {
+  flex: 1 1;
+  background: #555;
+  color: lightblue;
+  border-radius: 0.4em;
+  padding: 0.25em 0.5em;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+</style>
+
+<h2><a href="/users/<%= user.id %>"><%= user.name %> (<%= user.id %>)</a></h2>
+
+<h3><%= posts.total_result_count %> posts</h3>
+
+<ul id="posts-list">
+  <% posts.each do |(_, post)| %>
+    <li class="posts-entry">
+      <div><a href="/posts/<%= post.id %>"><%= post.title %></a></div>
+      <div>
+        <% if published_at = post.published_at %>
+          <time><%= published_at %></time>
+        <% else %>
+          <div class="badge subdued">Unpublished</div>
+        <% end %>
+      </div>
+      <div><%= post.comments.size %> comments</div>
+    </li>
+  <% end %>
+</ul>
+
+<% if page * per_page < posts.total_result_count %>
+  <nav class="pagination">
+    <a href="?<%= r.params.without("page") %>&page=<%= page + 1 %>">more</a>
+  </div>
+<% end %>

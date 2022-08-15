@@ -1,0 +1,31 @@
+<style>
+#notifications-list {
+  list-style: none;
+  padding: 0;
+}
+
+#notifications-list .notification {
+  position: relative;
+  margin: 1em;
+}
+
+#notifications-list .notification .dismiss-button {
+  position: absolute;
+  right: 1em;
+}
+</style>
+
+<h2><a href="/notifications">Notifications</a></h2>
+
+<ul id="notifications-list">
+  <% notifications.each do |(key, notification)| %>
+    <li class="notification">
+      <% form method: "POST", action: "/notifications/#{notification.id}/dismiss", class: "dismiss-button" do %>
+        <button>&times;</button>
+      <% end %>
+      <div><a href="<%= notification.path %>"><%= notification.title %></a></div>
+
+      <article><%= notification.body %></article>
+    </li>
+  <% end %>
+</ul>

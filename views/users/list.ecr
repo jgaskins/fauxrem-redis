@@ -1,0 +1,17 @@
+<% users.each do |(key, user)| %>
+  <tr>
+    <th><a href="/users/<%= user.id %>"><%= user.id %></a></th>
+    <td><%= user.name %></td>
+    <td>
+      <% form method: "POST", action: "/users/#{user.id}/follow" do %>
+        <button>
+          <% if user_follows.includes? user.id %>
+            Unfollow
+          <% else %>
+            Follow
+          <% end %>
+        </button>
+      <% end %>
+    </td>
+  </tr>
+<% end %>

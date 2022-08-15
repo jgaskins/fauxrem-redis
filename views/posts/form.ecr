@@ -1,0 +1,54 @@
+<style>
+#new-post-form {
+  font-size: 1.2em;
+}
+
+#new-post-form .field {
+  margin-bottom: 1em;
+}
+
+#new-post-form input,
+#new-post-form textarea,
+#new-post-form button {
+  font-size: 1.2em;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5em 0.8em;
+}
+
+.screen-reader-only {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  top: auto;
+  overflow: hidden;
+}
+</style>
+
+<% if errors %>
+  <div class="flash alert"><%== errors %></div>
+<% end %>
+
+<% form method: "POST", action: "/posts", id: "new-post-form" do %>
+  <div class="field">
+    <label>
+      <div class="label">Title</div>
+      <input name=title value="<%= title %>">
+    </label>
+  </div>
+
+  <div class="field">
+    <label>
+      <div class="label">Tags (comma-separated)</div>
+      <input name=tags placeholder="ruby, rails" value="<%= tags %>">
+    </label>
+  </div>
+
+  <div class="field">
+    <label for="post-body" class="screen-reader-only">Body</label>
+    <textarea id="post-body" name="body" cols="30" rows="10"><%== body %></textarea>
+  </div>
+
+  <button>Post draft</button>
+<% end %>

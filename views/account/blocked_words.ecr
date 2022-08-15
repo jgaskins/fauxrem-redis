@@ -1,0 +1,24 @@
+<h2>Muted words</h2>
+
+<div>
+  <p>Muted words will be excluded from your feed</p>
+
+  <% form method: "POST", action: "/account/blocked_words" do %>
+    <input name=word><button>Add</button>
+  <% end %>
+  <table>
+    <tbody>
+    <% blocked_words.each do |word| %>
+      <tr>
+        <th><%= word %></th>
+        <td>
+          <%# This is hilarious because it's just the same form as above %>
+          <% form method: "POST", action: "/account/blocked_words" do %>
+            <input type=hidden name=word value="<%= word %>"><button>Remove</button>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

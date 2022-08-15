@@ -1,0 +1,68 @@
+<style>
+#posts-list {
+  list-style: none;
+  padding: 0;
+}
+
+#posts-list .posts-entry {
+  margin: 1em;
+}
+
+.post-tag-list {
+  list-style: none;
+  padding: 0;
+}
+
+.post-tag {
+  display: inline-block;
+  margin: 0.25em 0.5em;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-around;
+}
+
+.pagination a {
+  flex: 1 1;
+  background: #555;
+  color: lightblue;
+  border-radius: 0.4em;
+  padding: 0.25em 0.5em;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+</style>
+
+<div id="actions"><a href="/posts/new">New Post</a></div>
+
+<h4><%= post_list_type %> contains <%= posts.total_result_count %> posts</h4>
+
+<ul id="posts-list">
+  <% posts.each do |(id, title, author, published_at_ts, tags)| %>
+    <li class="posts-entry">
+      <article class="post">
+        <header>
+          <h1 class="title"><a href="/posts/<%= id %>"><%= title %></a></h1>
+          <h2 class="author"><%= author %></h2>
+          <ul class="post-tag-list">
+            <% (tags.try(&.split(',')) || Tuple.new).each do |tag| %>
+              <li class="post-tag">
+                <a href="/tags/<%= tag %>"><%= tag %></a>
+              </li>
+            <% end %>
+          </ul>
+          <time class="timestamp"><%= Time.unix_ms published_at_ts.to_i64 %></time>
+        </header>
+      </article>
+    </li>
+  <% end %>
+</ul>
+
+<% if page * per_page < posts.total_result_count %>
+  <nav class="pagination">
+    <a href="?<%= r.params.without("page") %>&page=<%= page + 1 %>">more</a>
+  </div>
+<% end %>

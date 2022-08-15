@@ -1,0 +1,11 @@
+<h3>Could not save post</h3>
+
+<ul>
+  <% {% for attribute in %w[title body].map(&.id) %} %>
+    <% unless {{attribute}}.presence %>
+      <li>
+        <%= "{{attribute}}" %> cannot be empty
+      </li>
+    <% end %>
+  <% {% end %} %>
+</ul>

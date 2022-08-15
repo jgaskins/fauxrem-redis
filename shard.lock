@@ -1,0 +1,39 @@
+# NOTICE: This lockfile contains some overrides from shard.override.yml
+version: 2.0
+shards:
+  armature:
+    git: https://github.com/jgaskins/armature.git
+    version: 0.2.4
+
+  db:
+    git: https://github.com/crystal-lang/crystal-db.git
+    version: 0.11.0
+
+  dotenv:
+    git: https://github.com/jgaskins/cr-dotenv.git
+    version: 0.7.1
+
+  faker:
+    git: https://github.com/askn/faker.git
+    version: 0.8.0
+
+  interro:
+    git: https://github.com/jgaskins/interro.git
+    version: 0.2.1
+
+  markd:
+    git: https://github.com/icyleaf/markd.git
+    version: 0.5.0
+
+  msgpack:
+    git: https://github.com/crystal-community/msgpack-crystal.git
+    version: 1.2.0
+
+  pg:
+    git: https://github.com/will/crystal-pg.git
+    version: 0.26.0
+
+  redis: # Overridden
+    git: https://github.com/jgaskins/redis.git
+    version: 0.5.4+git.commit.cd77242b285467ef743fdd10b419c640aa76c497
+

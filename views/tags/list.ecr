@@ -1,0 +1,18 @@
+<% tags.each do |tag| %>
+  <tr>
+    <th><a href="/tags/<%= tag %>"><%= tag %></a></th>
+    <% if following_tags %>
+      <td>
+        <% form method: "POST", action: "/tags/#{tag}/follow" do %>
+          <button>
+            <% if following_tags.includes? tag %>
+              Unfollow
+            <% else %>
+              Follow
+            <% end %>
+          </button>
+        <% end %>
+      </td>
+    <% end %>
+  </tr>
+<% end %>

@@ -1,0 +1,23 @@
+<input type=search id=users-search-input>
+
+<table>
+  <tbody id="users-list">
+    <% render "users/list" %>
+  </tbody>
+</table>
+
+<script>
+  (async () => {
+    var input = document.getElementById('users-search-input')
+    var list = document.getElementById('users-list')
+    input.addEventListener('input', async event => {
+      if(input.value.length > 0) {
+          var response = await fetch(`/fragments/search/users?query=${input.value}`)
+          var html = await response.text()
+          list.innerHTML = html
+      } else {
+        list.innerText = ''
+      }
+    })
+  })()
+</script>

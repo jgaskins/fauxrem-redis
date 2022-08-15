@@ -1,0 +1,45 @@
+<style>
+#mod-reports-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0 0;
+}
+
+#mod-reports-table th,
+#mod-reports-table td {
+  border: 1px solid #777;
+  padding: 0.25em 0.4em;
+}
+</style>
+
+<h2><%== Breadcrumbs.new({ {"Moderation", "/mod"}, {"Reports", "/reports"} }) %></h2>
+
+<table id="mod-reports-table">
+  <thead>
+    <tr>
+      <th>Post/Comment</th>
+      <th>Reporter</th>
+      <th>Note</th>
+      <th>Timestamp</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% reports.each do |(key, report)| %>
+      <tr>
+        <td><a href="/posts/<%= report.post_id %>"><%= report.post_id %></a></td>
+        <td><a href="/users/<%= report.reporter %>"><%= report.reporter %></a></td>
+        <td><%= report.note %></td>
+        <td><%= report.created_at %></td>
+        <td>
+          <% form method: "POST", action: "/mod/reports/#{report.id}/unpublish" do %>
+            <button>Unpublish</button>
+          <% end %>
+          <% form method: "POST", action: "/mod/reports/#{report.id}/ignore" do %>
+            <button>Ignore</button>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,11 @@
+<h2><a href="/admin/pages">Pages</a></h2>
+
+<a href="/admin/pages/new">New page</a>
+
+<ul>
+  <% pages.each do |(key, page)| %>
+    <li>
+      <a href="/pages/<%= page.id %>"><%= page.title %></a>
+    </li>
+  <% end %>
+</ul>

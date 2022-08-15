@@ -1,0 +1,23 @@
+<style>
+#admin-page-form input,
+#admin-page-form textarea {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.25em 0.5em;
+  border-radius: 0.5em;
+  font-size: 1.2em;
+}
+
+#admin-page-form textarea {
+  height: 50vh;
+}
+</style>
+
+<h2><a href="/admin/pages/new">New Page</a></h2>
+
+<% form method: "POST", action: "/admin/pages", id: "admin-page-form" do %>
+  <div><input name="title" autofocus></div>
+  <div><textarea name=body></textarea></div>
+  <button>Save</button>
+<% end %>
