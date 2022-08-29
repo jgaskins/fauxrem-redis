@@ -141,23 +141,11 @@ shards build
 bin/fauxrem_redis
 ```
 
-The RediSearch indexes will be provisioned automatically when the app boots.
+The RediSearch indexes will be provisioned automatically when the app boots. Then you can open your browser to http://localhost:4040 to see the site working.
 
 ## Deployment
 
-To make deploys work, you need to create free account on [Redis Cloud](https://redis.info/try-free-dev-to)
-
-### Heroku
-
-[Insert Deploy on Heroku button](https://devcenter.heroku.com/articles/heroku-button)
-
-### Netlify
-
-[Insert Deploy on Netlify button](https://www.netlify.com/blog/2016/11/29/introducing-the-deploy-to-netlify-button/)
-
-### Vercel
-
-[Insert Deploy on Vercel button](https://vercel.com/docs/deploy-button)
+To make deploys work, you need to create free account on [Redis Cloud](https://redis.info/try-free-dev-to), and you'll need a Redis Stack instance in order to use RedisJSON and RediSearch.
 
 ## More Information about Redis Stack
 
