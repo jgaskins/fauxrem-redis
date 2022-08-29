@@ -20,8 +20,8 @@ spawn do
         PREFIX 1 post:
       SCHEMA
         $.author AS author TEXT NOSTEM WEIGHT 2
-        $.title AS title TEXT WEIGHT 3 PHONETIC dm:en
-        $.body AS body TEXT PHONETIC dm:en
+        $.title AS title TEXT WEIGHT 3
+        $.body AS body TEXT
         $.tags AS tags TAG SEPARATOR , CASESENSITIVE
         $.popularity AS popularity NUMERIC SORTABLE
         $.published_at AS published_at NUMERIC SORTABLE
