@@ -39,6 +39,7 @@ class Entrypoint
           notifications = REDIS
             .ft
             .search("search:notifications", "@recipient:#{current_user_id}", limit: {0, 0})
+            .as(Array)
             .first
             .as(Int64)
         end
