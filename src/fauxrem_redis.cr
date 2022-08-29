@@ -106,4 +106,4 @@ http = HTTP::Server.new([
 ])
 port = ENV.fetch("PORT", "4040").to_i
 puts "Listening on #{port}..."
-http.listen port
+http.listen "0.0.0.0", port
