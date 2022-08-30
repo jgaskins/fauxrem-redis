@@ -132,42 +132,47 @@ struct Posts
             REDIS.json.numincrby post_key, ".popularity", 1
           end
 
-          if (current_user = @current_user) && current_user.id != post.author
+          if current_user = @current_user
             r.post "likes" do
-              like_key = "likes:post:#{post.id}"
-              if REDIS.sadd(like_key, current_user.id) == 0
-                # Already liked, so we remove the like and any notifications that were generated from it
-                REDIS.srem like_key, current_user.id
-                REDIS.json.numincrby post_key, ".popularity", -5
-                session["flash.notice"] = "Like removed"
-                # Delete the notification that was sent when liking this post
-                result = Redis::FullText::JSONSearchResults(Notification).new(
-                  REDIS.ft.search "search:notifications", <<-QUERY.tap { |q| puts q }, limit: {0, 1}
+              if current_user.id != post.author
+                like_key = "likes:post:#{post.id}"
+                if REDIS.sadd(like_key, current_user.id) == 0
+                  # Already liked, so we remove the like and any notifications that were generated from it
+                  REDIS.srem like_key, current_user.id
+                  REDIS.json.numincrby post_key, ".popularity", -5
+                  session["flash.notice"] = "Like removed"
+                  # Delete the notification that was sent when liking this post
+                  result = Redis::FullText::JSONSearchResults(Notification).new(
+                    REDIS.ft.search "search:notifications", <<-QUERY.tap { |q| puts q }, limit: {0, 1}
                     @recipient:#{post.author}
                     @title:"#{current_user.id} liked your post"
                     @title:#{post.title.inspect}
                   QUERY
-                )
-                result.each do |(key, notification)|
-                  REDIS.unlink key
-                end
-              else # Like was created, so we create a notification for the author
-                REDIS.pipeline do |pipe|
-                  pipe.json.numincrby post_key, ".popularity", 5
-                  notification = Notification.new(
-                    title: "#{current_user.id} liked your post 👍 — #{post.title}",
-                    recipient: post.author,
-                    body: nil,
-                    path: "/posts/#{post.id}",
                   )
-                  notification_key = "notification:#{notification.id}"
-                  pipe.json.set notification_key, ".", notification
-                  pipe.expire notification_key, 1.week
-                  session["flash.notice"] = "Liked!"
+                  result.each do |(key, notification)|
+                    REDIS.unlink key
+                  end
+                else # Like was created, so we create a notification for the author
+                  REDIS.pipeline do |pipe|
+                    pipe.json.numincrby post_key, ".popularity", 5
+                    notification = Notification.new(
+                      title: "#{current_user.id} liked your post 👍 — #{post.title}",
+                      recipient: post.author,
+                      body: nil,
+                      path: "/posts/#{post.id}",
+                    )
+                    notification_key = "notification:#{notification.id}"
+                    pipe.json.set notification_key, ".", notification
+                    pipe.expire notification_key, 1.week
+                    session["flash.notice"] = "Liked!"
+                  end
                 end
-              end
 
-              response.redirect "/posts/#{post.id}"
+                response.redirect "/posts/#{post.id}"
+              else
+                session["flash.alert"] = "Cannot like your own posts"
+                response.redirect "/posts/#{post.id}"
+              end
             end
           end
 
